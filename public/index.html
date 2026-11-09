@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PinPal: find people near you</title>
+  <meta name="description" content="Find people near you who share your interests, without giving away your exact location.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="landing-header page-width">
+    <a class="logo" href="/" aria-label="PinPal home">
+      <svg class="logo-pin" viewBox="0 0 24 32" aria-hidden="true">
+        <path d="M12 0C5.4 0 0 5.3 0 11.9 0 20.8 12 32 12 32s12-11.2 12-20.1C24 5.3 18.6 0 12 0z"/>
+        <circle cx="12" cy="12" r="4.5"/>
+      </svg>
+      <span>PinPal</span>
+    </a>
+    <nav class="landing-actions" aria-label="Account">
+      <a class="button button-quiet" href="/login.html">Log in</a>
+      <a class="button button-primary" href="/signup.html">Sign up</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero page-width">
+      <div class="hero-text">
+        <h1>Meet people nearby without giving away where you are.</h1>
+        <p class="hero-intro">
+          Share your location and PinPal shows you who's close and what you have in common.
+          Other people see a rough distance and an approximate pin, never your exact spot.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary button-large" href="/signup.html">Sign up</a>
+          <a class="button button-secondary button-large" href="/login.html">Log in</a>
+        </div>
+      </div>
+
+      <!-- The illustration is explained by the text beside it, so a short summary is enough for screen readers. -->
+      <svg class="radar" viewBox="0 0 500 480" role="img"
+           aria-label="You at the center of distance rings, with nearby people shown inside approximate areas instead of exact points.">
+        <g class="radar-rings">
+          <circle cx="240" cy="240" r="225"/>
+          <circle cx="240" cy="240" r="150"/>
+          <circle cx="240" cy="240" r="70"/>
+        </g>
+        <g class="radar-ring-labels">
+          <text x="240" y="162">1 km</text>
+          <text x="240" y="82">5 km</text>
+          <text x="240" y="470">10 km</text>
+        </g>
+
+        <g class="radar-person" style="--delay: 0.15s">
+          <circle class="radar-area" cx="175" cy="190" r="28"/>
+          <circle cx="175" cy="190" r="19" fill="#7E22CE"/>
+          <text class="radar-initials" x="175" y="195">MK</text>
+          <text class="radar-distance" x="175" y="233">1.6 km</text>
+        </g>
+        <g class="radar-person" style="--delay: 0.3s">
+          <circle class="radar-area" cx="345" cy="325" r="28"/>
+          <circle cx="345" cy="325" r="19" fill="#0F766E"/>
+          <text class="radar-initials" x="345" y="330">AS</text>
+          <text class="radar-distance" x="345" y="368">4.1 km</text>
+        </g>
+        <g class="radar-person" style="--delay: 0.45s">
+          <circle class="radar-area" cx="120" cy="345" r="28"/>
+          <circle cx="120" cy="345" r="19" fill="#1D4ED8"/>
+          <text class="radar-initials" x="120" y="350">TJ</text>
+          <text class="radar-distance" x="120" y="388">5.6 km</text>
+        </g>
+        <g class="radar-person" style="--delay: 0.6s">
+          <circle class="radar-area" cx="350" cy="62" r="28"/>
+          <circle cx="350" cy="62" r="19" fill="#BE185D"/>
+          <text class="radar-initials" x="350" y="67">NP</text>
+          <text class="radar-distance" x="350" y="105">8.9 km</text>
+        </g>
+
+        <g class="radar-person" style="--delay: 0.75s">
+          <circle class="radar-area" cx="345" cy="150" r="28"/>
+          <circle cx="345" cy="150" r="19" fill="#C2410C"/>
+          <text class="radar-initials" x="345" y="155">RV</text>
+          <g class="radar-card">
+            <rect x="290" y="186" width="200" height="68" rx="14"/>
+            <text class="radar-card-title" x="306" y="214">Ravi, 4.4 km away</text>
+            <text class="radar-card-detail" x="306" y="236">You both like Music</text>
+          </g>
+        </g>
+
+        <g class="radar-you">
+          <path d="M240 208c-11.6 0-21 9.3-21 20.8 0 15.6 21 35.2 21 35.2s21-19.6 21-35.2c0-11.5-9.4-20.8-21-20.8z"/>
+          <circle cx="240" cy="229" r="7.5"/>
+          <text x="240" y="284">You</text>
+        </g>
+      </svg>
+    </section>
+
+    <section class="steps page-width" aria-labelledby="steps-title">
+      <h2 id="steps-title">How PinPal works</h2>
+      <ol class="steps-list">
+        <li>
+          <h3>Share your location</h3>
+          <p>Press one button when you want to appear. PinPal never tracks you in the background.</p>
+        </li>
+        <li>
+          <h3>Find people like you</h3>
+          <p>Search up to 25 km away and filter by interests such as Music, Coding or Sports.</p>
+        </li>
+        <li>
+          <h3>Connect and chat</h3>
+          <p>Send a request. Once it's accepted, you can message each other in real time.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="privacy page-width" aria-labelledby="privacy-title">
+      <h2 id="privacy-title">You decide what people see</h2>
+      <div class="privacy-columns">
+        <div>
+          <h3>Other people can see</h3>
+          <ul>
+            <li>Your name, username, bio and interests</li>
+            <li>A rounded distance, such as 1.2&nbsp;km</li>
+            <li>A map pin placed 200–400 m from your real location</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Other people can't see</h3>
+          <ul>
+            <li>Your exact location</li>
+            <li>Your email address</li>
+            <li>Your profile, once you block them</li>
+          </ul>
+        </div>
+      </div>
+      <p class="privacy-ghost">Want a break? Turn on Ghost Mode and you disappear from Nearby straight away.</p>
+    </section>
+  </main>
+
+  <footer class="landing-footer page-width">
+    <p>PinPal is a college web-development project.</p>
+  </footer>
+
+  <script type="module" src="/js/auth.js"></script>
+</body>
+</html>

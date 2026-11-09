@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nearby on PinPal</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="auth-page">
+  <!-- Temporary page so login has somewhere to land. Phase 3 replaces it with the real Nearby page. -->
+  <main class="card auth-card">
+    <h1>You're logged in</h1>
+    <p id="status" role="status">Loading your account…</p>
+    <p class="form-error" id="page-error" role="alert" hidden></p>
+    <button class="button button-secondary button-full" id="logout-button" type="button">Log out</button>
+  </main>
+
+  <script type="module" src="/js/nearby.js"></script>
+</body>
+</html>

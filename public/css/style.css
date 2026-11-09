@@ -1,0 +1,631 @@
+/* PinPal's only stylesheet. Mobile styles come first, and wider screens are added at the end. */
+
+/* ---------- Design tokens ---------- */
+:root {
+  --color-background: #fbfaf8;
+  --color-surface: #ffffff;
+  --color-text: #2a2320;
+  --color-text-muted: #665c57;
+  --color-border: #e5e0dc;
+
+  /* Coral is too light for white text, so filled coral areas use dark text instead. */
+  --color-primary: #ff6f4d;
+  --color-primary-hover: #f85f3b;
+  --color-on-primary: #2b1009;
+  /* A darker coral that is readable as text on the off-white background. */
+  --color-primary-text: #b23a14;
+  --color-primary-tint: #ffe9e3;
+
+  --color-error: #b3261e;
+  --color-error-tint: #fdecea;
+
+  --radius-small: 10px;
+  --radius-medium: 14px;
+  --radius-large: 24px;
+  --shadow-soft: 0 10px 30px rgba(74, 44, 32, 0.09);
+
+  --font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --page-max-width: 1120px;
+  --page-gutter: 20px;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+
+a {
+  color: var(--color-primary-text);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.page-width {
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+
+/* ---------- Logo ---------- */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--radius-small);
+  color: var(--color-text);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.logo-pin {
+  width: 21px;
+  height: 28px;
+}
+
+.logo-pin path {
+  fill: var(--color-primary);
+}
+
+.logo-pin circle {
+  fill: var(--color-surface);
+}
+
+/* ---------- Buttons ---------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px; /* A comfortable size for a finger to tap. */
+  padding: 8px 18px;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-small);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button-primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.button-primary:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.button-secondary {
+  background: var(--color-surface);
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+
+.button-secondary:hover:not(:disabled) {
+  background: var(--color-primary-tint);
+}
+
+.button-quiet {
+  background: transparent;
+  color: var(--color-text);
+}
+
+.button-quiet:hover {
+  background: var(--color-primary-tint);
+}
+
+.button-large {
+  min-height: 52px;
+  padding-inline: 28px;
+}
+
+.button-full {
+  width: 100%;
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-soft);
+}
+
+/* ---------- Avatars ---------- */
+.avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.avatar-large {
+  width: 64px;
+  height: 64px;
+  font-size: 1.4rem;
+}
+
+/* ---------- Forms ---------- */
+.field {
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+}
+
+.field label,
+.field legend {
+  display: block;
+  margin-bottom: 6px;
+  padding: 0;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.field input:not([type='radio']) {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 14px;
+  background: var(--color-surface);
+  border: 1.5px solid #8f8580; /* Dark enough to meet the 3:1 contrast rule for form controls. */
+  border-radius: var(--radius-small);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.field input[aria-invalid='true'] {
+  border-color: var(--color-error);
+}
+
+.field-hint {
+  margin-top: 5px;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+}
+
+.field-error {
+  margin-top: 5px;
+  color: var(--color-error);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.form-error {
+  margin-bottom: 18px;
+  padding: 10px 14px;
+  background: var(--color-error-tint);
+  border-radius: var(--radius-small);
+  color: var(--color-error);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* ---------- Avatar color picker ---------- */
+.color-picker {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.color-options {
+  display: grid;
+  grid-template-columns: repeat(4, 34px);
+  gap: 8px;
+}
+
+.color-option {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  margin: 0 !important;
+  border-radius: 50%;
+  background: var(--swatch);
+  cursor: pointer;
+}
+
+/* The real radio button stays on top, invisible, so keyboards and screen readers still work. */
+.color-option input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.color-option:has(input:checked) {
+  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-text);
+}
+
+.color-option:has(input:focus-visible) {
+  outline: 3px solid var(--color-text);
+  outline-offset: 5px;
+}
+
+/* ---------- Signup and login pages ---------- */
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  min-height: 100vh;
+  padding: 32px var(--page-gutter);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 26px 22px;
+}
+
+.auth-card h1 {
+  margin-bottom: 22px;
+  font-size: 1.55rem;
+  letter-spacing: -0.02em;
+}
+
+.auth-card #status {
+  margin-bottom: 20px;
+}
+
+.auth-switch {
+  margin-top: 20px;
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+  text-align: center;
+}
+
+/* ---------- Landing page: header and hero ---------- */
+.landing-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 14px;
+}
+
+.landing-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.hero {
+  display: grid;
+  gap: 24px;
+  padding-block: 28px 44px;
+}
+
+.hero h1 {
+  font-size: clamp(2.05rem, 8.6vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.hero-intro {
+  max-width: 34em;
+  margin-top: 18px;
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+/* ---------- Landing page: radar illustration ---------- */
+.radar {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  margin-inline: auto;
+  overflow: visible; /* Lets the card's shadow extend past the edge of the drawing. */
+  font-family: var(--font-family);
+}
+
+.radar text {
+  text-anchor: middle;
+}
+
+.radar-rings circle {
+  fill: none;
+  stroke: #e9c9bd;
+  stroke-width: 1.5;
+}
+
+.radar-rings circle:last-child {
+  fill: var(--color-primary-tint);
+  fill-opacity: 0.6;
+}
+
+.radar-ring-labels text {
+  fill: var(--color-text-muted);
+  /* SVG text shrinks along with the drawing, so these sizes start large for phones. */
+  font-size: 16px;
+  font-weight: 500;
+  paint-order: stroke;
+  stroke: var(--color-background);
+  stroke-width: 6px;
+}
+
+/* The dashed circle is the main idea: a person is somewhere in this area, not at one exact point. */
+.radar-area {
+  fill: rgba(255, 111, 77, 0.14);
+  stroke: var(--color-primary-text);
+  stroke-dasharray: 4 5;
+  stroke-width: 1.5;
+}
+
+.radar-initials {
+  fill: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.radar-distance {
+  fill: var(--color-text);
+  font-size: 16px;
+  font-weight: 600;
+  paint-order: stroke;
+  stroke: var(--color-background);
+  stroke-width: 5px;
+}
+
+.radar-card rect {
+  fill: var(--color-surface);
+  filter: drop-shadow(0 8px 16px rgba(74, 44, 32, 0.16));
+}
+
+.radar-card text {
+  text-anchor: start;
+}
+
+.radar-card-title {
+  fill: var(--color-text);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.radar-card-detail {
+  fill: var(--color-primary-text);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.radar-you path {
+  fill: var(--color-primary);
+  stroke: var(--color-on-primary);
+  stroke-width: 1.5;
+}
+
+.radar-you circle {
+  fill: var(--color-surface);
+}
+
+.radar-you text {
+  fill: var(--color-text);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* The page's one animation: the rings spread out, then people appear one by one. */
+@media (prefers-reduced-motion: no-preference) {
+  .radar-rings circle {
+    transform-origin: 240px 240px;
+    animation: ring-spread 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .radar-person {
+    animation: person-appear 0.35s ease-out both;
+    animation-delay: var(--delay);
+  }
+}
+
+@keyframes ring-spread {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+@keyframes person-appear {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ---------- Landing page: how it works ---------- */
+.steps {
+  padding-block: 28px 44px;
+}
+
+.steps h2,
+.privacy h2 {
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+}
+
+.steps-list {
+  display: grid;
+  gap: 24px;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps-list li {
+  position: relative;
+  padding-left: 54px;
+  counter-increment: step;
+}
+
+.steps-list li::before {
+  content: counter(step);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  color: var(--color-on-primary);
+  font-weight: 700;
+}
+
+.steps-list h3 {
+  margin-bottom: 4px;
+  font-size: 1.08rem;
+}
+
+.steps-list p {
+  color: var(--color-text-muted);
+}
+
+/* ---------- Landing page: privacy ---------- */
+/* The band sits inside the page width, so its side gutters come from a margin instead of padding. */
+.privacy {
+  width: calc(100% - 2 * var(--page-gutter));
+  max-width: calc(var(--page-max-width) - 2 * var(--page-gutter));
+  padding: 30px 24px;
+  background: var(--color-text);
+  border-radius: var(--radius-large);
+  color: #ffffff;
+}
+
+.privacy-columns {
+  display: grid;
+  gap: 24px;
+  margin-top: 22px;
+}
+
+.privacy h3 {
+  margin-bottom: 8px;
+  color: #ffb8a6;
+  font-size: 1rem;
+}
+
+.privacy ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.privacy li + li {
+  margin-top: 6px;
+}
+
+.privacy-ghost {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.landing-footer {
+  padding-block: 28px;
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+}
+
+/* ---------- Laptop and larger screens ---------- */
+@media (min-width: 900px) {
+  :root {
+    --page-gutter: 32px;
+  }
+
+  .landing-header {
+    padding-block: 20px;
+  }
+
+  .hero {
+    grid-template-columns: 1.05fr 1fr;
+    align-items: center;
+    gap: 40px;
+    padding-block: 36px 72px;
+  }
+
+  .radar-ring-labels text,
+  .radar-distance,
+  .radar-card-detail {
+    font-size: 13px;
+  }
+
+  .radar-card-title,
+  .radar-you text {
+    font-size: 14px;
+  }
+
+  .steps {
+    padding-block: 32px 72px;
+  }
+
+  .steps-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .privacy {
+    padding: 48px;
+  }
+
+  .privacy-columns {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 48px;
+  }
+
+  .auth-page {
+    justify-content: center;
+  }
+
+  .auth-card {
+    padding: 34px 32px;
+  }
+}

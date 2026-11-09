@@ -1,0 +1,9 @@
+node_modules/
+.env
+
+# The database is created on first run and filled by the seed script.
+data/
+
+# Local Claude Code tooling, not part of the app.
+.claude/
+skills-lock.json
