@@ -4,7 +4,9 @@ import { Router } from 'express';
 import { nanoid } from 'nanoid';
 import { getUserByEmail, getUserById, getUserByUsername, saveUser } from '../db.js';
 import { requireAuth } from '../middleware/auth.js';
+import { limitFailedLogins, recordFailedLogin } from '../middleware/rateLimit.js';
 import { validateLogin, validateSignup } from '../middleware/validate.js';
+import { disconnectUser } from '../socket.js';
 import { selfUser } from '../utils/serializers.js';
 
 const BCRYPT_ROUNDS = 10;
@@ -73,7 +75,7 @@ router.post('/signup', validateSignup, async (req, res) => {
   res.status(201).json({ user: selfUser(user) });
 });
 
-router.post('/login', validateLogin, async (req, res) => {
+router.post('/login', limitFailedLogins, validateLogin, async (req, res) => {
   const { identifier, password } = req.body;
 
   // Usernames can't contain @, so this can't confuse a username with an email.
@@ -85,6 +87,7 @@ router.post('/login', validateLogin, async (req, res) => {
 
   // The same message for both cases, so this form doesn't reveal which accounts exist.
   if (!isPasswordCorrect) {
+    recordFailedLogin(req.ip);
     return res.status(401).json({ error: 'Incorrect email, username or password' });
   }
 
@@ -100,6 +103,7 @@ router.post('/logout', requireAuth, (req, res, next) => {
     if (err) {
       return next(err);
     }
+    disconnectUser(req.user.id);
     res.clearCookie('pinpal.sid');
     res.json({ ok: true });
   });

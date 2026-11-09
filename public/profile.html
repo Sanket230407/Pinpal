@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your profile on PinPal</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="app-page">
+  <main class="page page-width page-narrow">
+    <h1 class="page-title">Your profile</h1>
+    <div id="page-state"></div>
+
+    <div id="profile-content" hidden>
+      <section class="card section-card profile-summary" aria-label="Account details">
+        <div class="avatar avatar-large" id="avatar-preview" aria-hidden="true"></div>
+        <div>
+          <p class="profile-name" id="summary-name"></p>
+          <p class="person-username" id="summary-username"></p>
+          <p class="person-username" id="summary-email"></p>
+          <a class="profile-public-link" id="public-link">See your public profile</a>
+        </div>
+      </section>
+
+      <section class="card section-card ghost-card" aria-labelledby="ghost-title">
+        <div>
+          <h2 id="ghost-title">Ghost Mode</h2>
+          <p class="section-text">Hide yourself from everyone's Nearby results.</p>
+        </div>
+        <label class="switch">
+          <span class="visually-hidden">Ghost Mode</span>
+          <input type="checkbox" role="switch" id="ghost-toggle">
+          <span class="switch-track" aria-hidden="true"></span>
+        </label>
+      </section>
+      <p class="form-error" id="ghost-error" role="alert" hidden></p>
+
+      <section class="card section-card" aria-labelledby="edit-title">
+        <h2 id="edit-title">Edit your profile</h2>
+        <form id="profile-form" novalidate>
+          <p class="form-error" id="form-error" role="alert" hidden></p>
+
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" aria-describedby="name-error">
+            <p class="field-error" id="name-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="bio">Bio</label>
+            <textarea id="bio" name="bio" rows="3" aria-describedby="bio-count bio-error"></textarea>
+            <p class="field-hint" id="bio-count"></p>
+            <p class="field-error" id="bio-error" hidden></p>
+          </div>
+
+          <fieldset class="field">
+            <legend>Interests</legend>
+            <p class="field-hint" id="interest-count" role="status"></p>
+            <div class="interest-options" id="interest-options"></div>
+            <p class="field-error" id="interests-error" hidden></p>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend>Avatar color</legend>
+            <div class="color-options" id="color-options"></div>
+            <p class="field-error" id="avatarColor-error" hidden></p>
+          </fieldset>
+
+          <p class="form-success" id="form-success" role="status" hidden></p>
+          <button class="button button-primary button-full" id="save-button" type="submit">Save changes</button>
+        </form>
+      </section>
+
+      <section class="card section-card" aria-labelledby="blocked-title">
+        <h2 id="blocked-title">Blocked people</h2>
+        <p class="form-error" id="blocked-error" role="alert" hidden></p>
+        <div id="blocked-list"></div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="/js/profile.js"></script>
+</body>
+</html>

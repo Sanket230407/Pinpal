@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connections on PinPal</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="app-page">
+  <main class="page page-width page-narrow">
+    <h1 class="page-title">Connections</h1>
+
+    <div class="segmented segmented-full" role="group" aria-label="Choose a list">
+      <button type="button" data-tab="connections" aria-pressed="true">Connections</button>
+      <button type="button" data-tab="received" aria-pressed="false">Received</button>
+      <button type="button" data-tab="sent" aria-pressed="false">Sent</button>
+    </div>
+
+    <p class="form-error" id="action-error" role="alert" hidden></p>
+    <div class="card section-card" id="tab-content"></div>
+  </main>
+
+  <script type="module" src="/js/connections.js"></script>
+</body>
+</html>

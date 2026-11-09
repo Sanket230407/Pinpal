@@ -575,10 +575,840 @@ a {
   font-size: 0.88rem;
 }
 
+/* ---------- Shared helpers ---------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.button-small {
+  min-height: 40px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+}
+
+.button-danger {
+  color: var(--color-error);
+}
+
+.notice {
+  margin-block: 14px;
+  padding: 10px 14px;
+  background: var(--color-primary-tint);
+  border-radius: var(--radius-small);
+  font-size: 0.9rem;
+}
+
+.form-success {
+  margin-bottom: 14px;
+  color: #17693a;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.field textarea,
+.filter select,
+.chat-form input {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 14px;
+  background: var(--color-surface);
+  border: 1.5px solid #8f8580;
+  border-radius: var(--radius-small);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+/* ---------- Loading, empty and error states ---------- */
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 16px;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.state-error {
+  color: var(--color-error);
+}
+
+.spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid var(--color-primary-tint);
+  border-top-color: var(--color-primary-text);
+  border-radius: 50%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .spinner {
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Site header and navigation ---------- */
+.app-page {
+  padding-bottom: calc(84px + env(safe-area-inset-bottom));
+}
+
+.site-header {
+  background: var(--color-surface);
+  box-shadow: 0 1px 0 var(--color-border);
+}
+
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 58px;
+}
+
+/* On phones the links become a tab bar fixed to the bottom of the screen. */
+.site-nav {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1100; /* Sits above the map, which uses z-indexes up to 1000. */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--color-surface);
+  box-shadow: 0 -1px 0 var(--color-border);
+}
+
+.nav-link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 9px 2px 7px;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.nav-link[aria-current='page'] {
+  color: var(--color-primary-text);
+  font-weight: 600;
+}
+
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.nav-badge {
+  position: absolute;
+  top: 4px;
+  left: calc(50% + 6px);
+  min-width: 19px;
+  padding: 0 5px;
+  background: var(--color-primary);
+  border-radius: 999px;
+  color: var(--color-on-primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 19px;
+  text-align: center;
+}
+
+/* ---------- App pages ---------- */
+.page {
+  padding-block: 20px;
+}
+
+.page-narrow {
+  max-width: 720px;
+}
+
+.page-title {
+  margin-bottom: 16px;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+}
+
+.section-card {
+  margin-bottom: 16px;
+  padding: 20px;
+}
+
+.section-card h2 {
+  margin-bottom: 14px;
+  font-size: 1.1rem;
+}
+
+.section-text {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+/* ---------- People ---------- */
+.person-name {
+  color: var(--color-text);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+a.person-name {
+  text-decoration: none;
+}
+
+a.person-name:hover {
+  text-decoration: underline;
+}
+
+.person-username {
+  color: var(--color-text-muted);
+  font-size: 0.86rem;
+  overflow-wrap: anywhere;
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chip {
+  padding: 2px 10px;
+  background: #f1eeeb;
+  border-radius: 999px;
+  font-size: 0.78rem;
+}
+
+.chip-shared {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 600;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #f1eeeb;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.status-connected {
+  background: #dff3e6;
+  color: #135c32;
+}
+
+/* ---------- Nearby page ---------- */
+.share-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 18px 20px;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.filter label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+
+.filters-actions {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.segmented {
+  display: inline-flex;
+  padding: 4px;
+  background: #f1eeeb;
+  border-radius: var(--radius-small);
+}
+
+.segmented-full {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.segmented button {
+  flex: 1;
+  min-height: 38px;
+  padding: 4px 14px;
+  background: transparent;
+  border: 0;
+  border-radius: 7px;
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.segmented-full button {
+  padding-inline: 4px;
+  font-size: 0.8rem;
+}
+
+.segmented button[aria-pressed='true'] {
+  background: var(--color-surface);
+  box-shadow: 0 1px 3px rgba(74, 44, 32, 0.2);
+  font-weight: 600;
+}
+
+.person-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.person-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--radius-medium);
+}
+
+.person-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.person-details {
+  font-size: 0.86rem;
+}
+
+.connection-control {
+  grid-column: 2;
+}
+
+.map {
+  /* Keeps Leaflet's high z-indexes inside the map, so they can't cover the navigation. */
+  isolation: isolate;
+  height: 62vh;
+  min-height: 360px;
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-soft);
+}
+
+.map-me svg {
+  display: block;
+  width: 30px;
+  height: 40px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+}
+
+.map-me path {
+  fill: var(--color-primary);
+  stroke: var(--color-on-primary);
+  stroke-width: 1.2;
+}
+
+.map-me circle {
+  fill: var(--color-surface);
+}
+
+/* The dashed ring tells people this pin is an approximate area. */
+.map-person {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 111, 77, 0.2);
+  border: 2px dashed var(--color-primary-text);
+  border-radius: 50%;
+}
+
+.map-person .avatar {
+  width: 36px;
+  height: 36px;
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+}
+
+.map-popup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: var(--font-family);
+}
+
+.map-popup-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.map-popup .person-username {
+  margin: 0;
+}
+
+/* Leaflet's own CSS adds margins to paragraphs inside popups. */
+.leaflet-popup-content p {
+  margin: 0;
+}
+
+.map-popup a.button {
+  color: var(--color-on-primary);
+}
+
+/* ---------- Lists of people ---------- */
+.list-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding-block: 12px;
+}
+
+.list-row + .list-row {
+  border-top: 1px solid var(--color-border);
+}
+
+.list-row-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-row-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ---------- Profile pages ---------- */
+.profile-summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.profile-public-link {
+  font-size: 0.86rem;
+}
+
+.ghost-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ghost-card h2 {
+  margin-bottom: 2px;
+}
+
+.switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 54px;
+  height: 32px;
+  cursor: pointer;
+}
+
+/* The real checkbox stays on top, invisible, so keyboards and screen readers still work. */
+.switch input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.switch-track {
+  position: absolute;
+  inset: 0;
+  background: #8f8580;
+  border-radius: 999px;
+  transition: background-color 0.15s ease;
+}
+
+.switch-track::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  background: var(--color-surface);
+  border-radius: 50%;
+  transition: transform 0.15s ease;
+}
+
+.switch input:checked + .switch-track {
+  background: var(--color-primary-text);
+}
+
+.switch input:checked + .switch-track::after {
+  transform: translateX(22px);
+}
+
+.switch input:focus-visible + .switch-track {
+  outline: 3px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+.interest-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  margin-top: 8px;
+}
+
+.field .interest-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  margin: 0;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.interest-option input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary-text);
+}
+
+.interest-option:has(input:disabled) {
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.public-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.public-profile .avatar {
+  margin-bottom: 6px;
+}
+
+.profile-bio {
+  margin-block: 8px;
+}
+
+.profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* ---------- Chat ---------- */
+/* The header and tab bar take up fixed space, and the messages area scrolls inside what's left. */
+.chat-page {
+  padding-bottom: 0;
+}
+
+.chat-main {
+  padding-inline: 0;
+}
+
+.chat-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  height: calc(100dvh - 58px - 62px - env(safe-area-inset-bottom));
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.chat-sidebar {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.chat-title {
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+}
+
+.chat-list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: var(--radius-small);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.chat-list-item:hover,
+.chat-list-item[aria-current='page'] {
+  background: var(--color-primary-tint);
+}
+
+.unread-dot {
+  flex-shrink: 0;
+  width: 11px;
+  height: 11px;
+  background: var(--color-primary-text);
+  border-radius: 50%;
+}
+
+.chat-conversation {
+  display: none; /* Phones show the list first. */
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* With a conversation open, phones swap the two panels. */
+.has-conversation .chat-sidebar {
+  display: none;
+}
+
+.has-conversation .chat-conversation {
+  display: flex;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.chat-partner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.chat-partner .avatar {
+  width: 36px;
+  height: 36px;
+  font-size: 0.8rem;
+}
+
+.chat-connection-notice {
+  margin: 8px 12px 0;
+}
+
+.chat-messages {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 14px 12px;
+}
+
+.message {
+  align-self: flex-start;
+  max-width: 82%;
+  padding: 8px 12px;
+  background: #f1eeeb;
+  border-radius: var(--radius-medium);
+  border-bottom-left-radius: 4px;
+}
+
+.message-mine {
+  align-self: flex-end;
+  background: var(--color-primary-tint);
+  border-radius: var(--radius-medium);
+  border-bottom-right-radius: 4px;
+}
+
+.message-text {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.message-time {
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+}
+
+.chat-form {
+  padding: 10px 12px;
+  border-top: 1px solid var(--color-border);
+}
+
+.chat-form .form-error {
+  margin-bottom: 8px;
+}
+
+.chat-form-row {
+  display: flex;
+  gap: 8px;
+}
+
+.chat-form input {
+  flex: 1;
+  min-width: 0;
+}
+
 /* ---------- Laptop and larger screens ---------- */
 @media (min-width: 900px) {
   :root {
     --page-gutter: 32px;
+  }
+
+  .app-page {
+    padding-bottom: 32px;
+  }
+
+  /* The tab bar moves up into the header. */
+  .site-nav {
+    position: static;
+    display: flex;
+    gap: 4px;
+    margin-inline: auto;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .nav-link {
+    flex-direction: row;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: var(--radius-small);
+    font-size: 0.92rem;
+  }
+
+  .nav-link:hover {
+    background: var(--color-primary-tint);
+  }
+
+  .nav-link[aria-current='page'] {
+    background: var(--color-primary-tint);
+  }
+
+  .nav-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .nav-badge {
+    position: static;
+  }
+
+  .page {
+    padding-block: 28px;
+  }
+
+  .share-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .filters {
+    grid-template-columns: 200px 200px 1fr;
+    align-items: end;
+  }
+
+  .filters-actions {
+    grid-column: auto;
+    justify-content: flex-end;
+  }
+
+  .person-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .person-card {
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+  }
+
+  .connection-control {
+    grid-column: auto;
+  }
+
+  .segmented-full button {
+    font-size: 0.9rem;
+  }
+
+  .interest-options {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Chat becomes two panels side by side. */
+  .chat-main {
+    padding: 20px var(--page-gutter);
+  }
+
+  .chat-layout,
+  .has-conversation.chat-layout {
+    grid-template-columns: 300px 1fr;
+    height: calc(100dvh - 58px - 40px);
+    border-radius: var(--radius-large);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .chat-sidebar,
+  .has-conversation .chat-sidebar {
+    display: block;
+    border-right: 1px solid var(--color-border);
+  }
+
+  .chat-conversation {
+    display: flex;
+  }
+
+  .chat-back {
+    display: none;
   }
 
   .landing-header {

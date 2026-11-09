@@ -77,15 +77,75 @@ export function getUserByEmail(email) {
   return copyIfFound(data.users.find((user) => user.email === email));
 }
 
-// Adds the user, or replaces the stored user with the same id.
-// Memory is updated before the first await, so later requests see the change straight away.
 export function saveUser(user) {
-  const index = data.users.findIndex((existing) => existing.id === user.id);
+  return addOrReplace(data.users, user);
+}
+
+export function getConnections() {
+  return structuredClone(data.connections);
+}
+
+export function getConnectionById(id) {
+  return copyIfFound(data.connections.find((connection) => connection.id === id));
+}
+
+export function saveConnection(connection) {
+  return addOrReplace(data.connections, connection);
+}
+
+export function deleteConnection(id) {
+  return removeById('connections', id);
+}
+
+// Messages are always stored in the order they were sent, so no sorting is needed.
+export function getMessagesBetween(userA, userB) {
+  const messages = data.messages.filter(
+    (message) =>
+      (message.fromId === userA && message.toId === userB) ||
+      (message.fromId === userB && message.toId === userA)
+  );
+  return structuredClone(messages);
+}
+
+export function getAllMessages() {
+  return structuredClone(data.messages);
+}
+
+export function saveMessage(message) {
+  return addOrReplace(data.messages, message);
+}
+
+export function getBlocks() {
+  return structuredClone(data.blocks);
+}
+
+export function saveBlock(block) {
+  return addOrReplace(data.blocks, block);
+}
+
+export function deleteBlock(id) {
+  return removeById('blocks', id);
+}
+
+// Replaces everything. Only the seed script uses this.
+export function replaceDatabase(newData) {
+  data = structuredClone(newData);
+  return queueWrite();
+}
+
+// Memory is updated before the first await, so later requests see the change straight away.
+function addOrReplace(collection, item) {
+  const index = collection.findIndex((existing) => existing.id === item.id);
   if (index === -1) {
-    data.users.push(structuredClone(user));
+    collection.push(structuredClone(item));
   } else {
-    data.users[index] = structuredClone(user);
+    collection[index] = structuredClone(item);
   }
+  return queueWrite();
+}
+
+function removeById(collectionName, id) {
+  data[collectionName] = data[collectionName].filter((item) => item.id !== id);
   return queueWrite();
 }
 

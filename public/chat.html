@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chat on PinPal</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="app-page chat-page">
+  <main class="page-width chat-main">
+    <!-- On phones, CSS shows one panel at a time depending on the has-conversation class. -->
+    <div class="card chat-layout" id="chat-layout">
+      <aside class="chat-sidebar" aria-labelledby="chat-title">
+        <h1 class="chat-title" id="chat-title">Chat</h1>
+        <div id="chat-list"></div>
+      </aside>
+
+      <section class="chat-conversation" aria-label="Conversation">
+        <header class="chat-header" id="chat-header" hidden>
+          <a class="button button-quiet button-small chat-back" href="/chat.html">Back</a>
+          <div class="chat-partner" id="chat-partner"></div>
+        </header>
+
+        <p class="notice chat-connection-notice" id="connection-notice" role="status" hidden>
+          Reconnecting… New messages will appear when you're back online.
+        </p>
+
+        <div class="chat-messages" id="chat-messages" role="log" aria-label="Messages"></div>
+
+        <form class="chat-form" id="chat-form" hidden>
+          <p class="form-error" id="send-error" role="alert" hidden></p>
+          <div class="chat-form-row">
+            <label class="visually-hidden" for="message-input">Message</label>
+            <input id="message-input" type="text" maxlength="500" autocomplete="off" placeholder="Write a message">
+            <button class="button button-primary" id="send-button" type="submit">Send</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="/js/chat.js"></script>
+</body>
+</html>
