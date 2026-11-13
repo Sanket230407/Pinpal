@@ -1,5 +1,12 @@
-// Tiny JSON-file "database". Good enough for a college project:
-// no installation needed, and you can open data/db.json to see what is stored.
+// Tiny "database" that holds { users, connections, messages }.
+//
+// Two storage modes:
+//  1. On your laptop (npm start): a JSON file, data/db.json. You can open it to see what is stored.
+//  2. On Vercel: an Upstash Redis database. Vercel runs the server as short-lived serverless
+//     copies that do not share memory and cannot write files, so a JSON file would be lost
+//     between requests (that was the "kicked back to login" bug). Redis keeps the data in one place.
+//
+// server.js calls load() before every API request and persist() before sending the reply.
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -7,20 +14,48 @@ const crypto = require('crypto');
 const DIR = path.join(__dirname, '..', 'data');
 const FILE = path.join(DIR, 'db.json');
 
-let data = { users: [], connections: [], messages: [] };
+// Vercel's Upstash integration sets one of these pairs of environment variables
+const REDIS_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const REDIS_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+const usesRedis = Boolean(REDIS_URL && REDIS_TOKEN);
+const REDIS_KEY = 'pinpal:db';
 
-function load() {
+const empty = () => ({ users: [], connections: [], messages: [] });
+
+let data = empty();
+let dirty = false;       // true when something changed and must be saved
+let fileLoaded = false;  // file mode only reads the file once
+
+// Send one command to Upstash Redis over its REST API, e.g. ['GET', 'pinpal:db']
+async function redis(command) {
+  const res = await fetch(REDIS_URL, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
+    body: JSON.stringify(command),
+  });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok || body.error) throw new Error('Redis error: ' + (body.error || res.status));
+  return body.result;
+}
+
+async function load() {
+  if (usesRedis) {
+    // Always fetch fresh data: another serverless copy may have changed it
+    const raw = await redis(['GET', REDIS_KEY]);
+    data = Object.assign(empty(), raw ? JSON.parse(raw) : {});
+    dirty = false;
+    return;
+  }
+  if (fileLoaded) return;
+  fileLoaded = true;
   try {
-    if (fs.existsSync(FILE)) {
-      const parsed = JSON.parse(fs.readFileSync(FILE, 'utf8'));
-      data = Object.assign(data, parsed);
-    }
+    if (fs.existsSync(FILE)) data = Object.assign(empty(), JSON.parse(fs.readFileSync(FILE, 'utf8')));
   } catch (e) {
     console.error('Could not read data/db.json, starting empty:', e.message);
   }
 }
 
-function flush() {
+function writeFile() {
   try {
     fs.mkdirSync(DIR, { recursive: true });
     const tmp = FILE + '.tmp';
@@ -31,21 +66,27 @@ function flush() {
   }
 }
 
-let timer = null;
+// Routes call save() after changing something; persist() then writes it once per request
 function save() {
-  clearTimeout(timer);
-  timer = setTimeout(flush, 150);
+  dirty = true;
+}
+
+async function persist() {
+  if (!dirty) return;
+  dirty = false;
+  if (usesRedis) await redis(['SET', REDIS_KEY, JSON.stringify(data)]);
+  else writeFile();
 }
 
 const id = () => crypto.randomUUID();
-
-load();
 
 module.exports = {
   get users() { return data.users; },
   get connections() { return data.connections; },
   get messages() { return data.messages; },
+  usesRedis,
+  load,
   save,
-  flush,
+  persist,
   id,
 };

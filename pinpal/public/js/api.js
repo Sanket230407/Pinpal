@@ -4,7 +4,12 @@ const TOKEN_KEY = 'pinpal_token';
 const Auth = {
   get token() { return localStorage.getItem(TOKEN_KEY); },
   set token(v) { v ? localStorage.setItem(TOKEN_KEY, v) : localStorage.removeItem(TOKEN_KEY); },
-  logout() { Auth.token = null; location.href = '/login.html'; },
+  // reason (optional) is shown on the login page so the user knows why they were logged out
+  logout(reason) {
+    Auth.token = null;
+    if (reason) sessionStorage.setItem('pinpal_logout_reason', reason);
+    location.href = '/login.html';
+  },
 };
 
 async function api(method, url, body) {
@@ -21,7 +26,7 @@ async function api(method, url, body) {
   let data = {};
   try { data = await res.json(); } catch { /* empty body */ }
 
-  if (res.status === 401 && !url.startsWith('/api/auth')) Auth.logout();
+  if (res.status === 401 && !url.startsWith('/api/auth')) Auth.logout(data.error);
   if (!res.ok) {
     const err = new Error(data.error || 'Request failed');
     err.code = data.code;

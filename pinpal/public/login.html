@@ -41,6 +41,14 @@
     const errorBox = document.getElementById('error');
     const submit = document.getElementById('submit');
 
+    // Explain why we landed here (e.g. "Session expired, please log in again")
+    const reason = sessionStorage.getItem('pinpal_logout_reason');
+    if (reason) {
+      sessionStorage.removeItem('pinpal_logout_reason');
+      errorBox.textContent = reason;
+      errorBox.classList.remove('hidden');
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       errorBox.classList.add('hidden');

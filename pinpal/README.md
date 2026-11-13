@@ -29,6 +29,16 @@ Open **http://localhost:3000**
 
 Demo people are visible only to you and can be deleted from the **Profile** tab.
 
+### Deploy on Vercel
+
+Vercel runs the server as short-lived serverless copies that don't share memory and can't write files, so `data/db.json` can't be used there. PinPal stores its data in **Upstash Redis** instead (free tier):
+
+1. In your Vercel project open **Storage → Create Database → Upstash (Redis)** and connect it to the project. This adds the `KV_REST_API_URL` and `KV_REST_API_TOKEN` environment variables. (`UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` also work.)
+2. In **Settings → Environment Variables** add `JWT_SECRET` with any long random text.
+3. Redeploy.
+
+Without the database, the API answers *"Database not set up"* instead of losing your account.
+
 ---
 
 ## Features
@@ -51,7 +61,7 @@ Demo people are visible only to you and can be deleted from the **Profile** tab.
 
 - **Frontend:** plain HTML, CSS, JavaScript (no framework). [Leaflet](https://leafletjs.com) + OpenStreetMap for the map (loaded from a CDN, so the map needs internet).
 - **Backend:** Node.js + Express REST API.
-- **Storage:** a JSON file (`data/db.json`), created automatically. You can open it to see exactly what is stored.
+- **Storage:** locally, a JSON file (`data/db.json`), created automatically. You can open it to see exactly what is stored. On Vercel, an Upstash Redis database (see below).
 - **Libraries:** `express`, `bcryptjs` (password hashing), `jsonwebtoken` (login tokens).
 
 ---

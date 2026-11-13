@@ -61,20 +61,18 @@ router.post('/:userId', (req, res) => {
   const msg = { id: db.id(), from: meId, to: otherId, text, createdAt: new Date().toISOString(), read: false };
   db.messages.push(msg);
 
-  // Demo people answer back after a moment so chat is easy to demonstrate
+  // Demo people answer back so chat is easy to demonstrate.
+  // The reply is saved straight away (a timer would not survive on Vercel's serverless functions).
   const other = db.users.find((u) => u.id === otherId);
   if (other && other.demoOwner === meId) {
-    setTimeout(() => {
-      db.messages.push({
-        id: db.id(),
-        from: otherId,
-        to: meId,
-        text: CANNED_REPLIES[Math.floor(Math.random() * CANNED_REPLIES.length)],
-        createdAt: new Date().toISOString(),
-        read: false,
-      });
-      db.save();
-    }, 1200);
+    db.messages.push({
+      id: db.id(),
+      from: otherId,
+      to: meId,
+      text: CANNED_REPLIES[Math.floor(Math.random() * CANNED_REPLIES.length)],
+      createdAt: new Date(Date.now() + 1000).toISOString(),
+      read: false,
+    });
   }
 
   db.save();

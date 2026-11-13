@@ -16,6 +16,32 @@ app.use((req, res, next) => {
   next();
 });
 
+// Database around every API request: load fresh data first, save changes before replying.
+// Requests are handled one at a time (a simple queue) so two requests never overwrite each other.
+let queue = Promise.resolve();
+app.use('/api', (req, res, next) => {
+  // On Vercel the disk is read-only, so without Redis nothing could be saved
+  if (process.env.VERCEL && !db.usesRedis) {
+    return res.status(503).json({ error: 'Database not set up. Connect Upstash Redis in Vercel > Storage, then redeploy.' });
+  }
+
+  queue = queue.then(() => new Promise((done) => {
+    res.on('close', done); // next request may start once this reply is sent
+
+    const sendJson = res.json.bind(res);
+    res.json = (body) => {
+      db.persist().then(() => sendJson(body), (err) => {
+        console.error(err);
+        res.status(500);
+        sendJson({ error: 'Could not save your changes, please try again' });
+      });
+      return res;
+    };
+
+    db.load().then(() => next(), next);
+  }));
+});
+
 // API routes
 app.use('/api/auth', require('./src/routes/auth'));
 app.use('/api', require('./src/routes/users'));
@@ -42,7 +68,6 @@ const server = app.listen(PORT, () => {
 });
 
 function shutdown() {
-  db.flush();
   server.close(() => process.exit(0));
 }
 process.on('SIGINT', shutdown);
