@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in - PinPal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+  <button class="theme-toggle theme-toggle-float" type="button"></button>
+  <div class="auth-wrap">
+    <form class="auth-card" id="form" novalidate>
+      <a class="logo" href="/"><span class="logo-pin"></span>PinPal</a>
+      <h1>Welcome back</h1>
+      <p class="sub">Log in to see who's around you.</p>
+
+      <div class="error-box hidden" id="error" role="alert"></div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" autocomplete="current-password" required>
+      </div>
+      <button class="btn btn-primary" id="submit" type="submit">Log in</button>
+      <p class="alt">New here? <a href="/register.html">Create an account</a></p>
+    </form>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script>
+    if (Auth.token) location.replace('/app.html');
+
+    const form = document.getElementById('form');
+    const errorBox = document.getElementById('error');
+    const submit = document.getElementById('submit');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.classList.add('hidden');
+      submit.disabled = true;
+      submit.textContent = 'Logging in...';
+      try {
+        const data = await api('POST', '/api/auth/login', {
+          email: document.getElementById('email').value,
+          password: document.getElementById('password').value,
+        });
+        Auth.token = data.token;
+        location.href = '/app.html';
+      } catch (err) {
+        errorBox.textContent = err.message;
+        errorBox.classList.remove('hidden');
+        submit.disabled = false;
+        submit.textContent = 'Log in';
+      }
+    });
+  </script>
+</body>
+</html>
