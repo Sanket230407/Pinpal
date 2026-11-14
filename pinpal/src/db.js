@@ -1,12 +1,4 @@
-// Tiny "database" that holds { users, connections, messages }.
-//
-// Two storage modes:
-//  1. On your laptop (npm start): a JSON file, data/db.json. You can open it to see what is stored.
-//  2. On Vercel: an Upstash Redis database. Vercel runs the server as short-lived serverless
-//     copies that do not share memory and cannot write files, so a JSON file would be lost
-//     between requests (that was the "kicked back to login" bug). Redis keeps the data in one place.
-//
-// server.js calls load() before every API request and persist() before sending the reply.
+
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
